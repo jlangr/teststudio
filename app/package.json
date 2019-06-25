@@ -1,0 +1,33 @@
+{
+  "name": "sample",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.17.1",
+    "npm": "^6.4.1",
+    "react": "^16.3.2",
+    "react-beforeunload": "^1.0.4",
+    "react-bootstrap": "^0.32.1",
+    "react-dom": "^16.3.2",
+    "react-scripts": "2.0.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --notify --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "@material-ui/core": "^3.6.0",
+    "@material-ui/icons": "^3.0.1",
+    "@material-ui/lab": "^3.0.0-alpha.24",
+    "axios-mock-adapter": "^1.15.0",
+    "react-select": "^2.1.0"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
