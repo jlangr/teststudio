@@ -2,14 +2,11 @@ import React, { Component } from 'react'
 import ContentEditable from 'react-contenteditable'
 import { Table, Button } from 'semantic-ui-react'
 import './styles.css'
+import { alwaysItems } from './always-items'
 
 export default class EditTable extends Component {
   initialState = {
-    store: [
-      { id: 1, name: 'aspirin (ea.)', price: 7.29 },
-      { id: 2, name: 'fancy bandage', price: 49.50 },
-      { id: 3, name: 'blood bucket', price: 99.98 },
-      { id: 4, name: 'regular bandage', price: 12.20 }],
+    store: alwaysItems,
     row: {
       name: '',
       price: '',
@@ -30,11 +27,9 @@ export default class EditTable extends Component {
     }
     const trimmedRow = { ...row, name: trimSpaces(row.name) }
 
-    row.id = store.length + 1
-
     this.setState({
       store: [...store, trimmedRow],
-      row: this.initialState.row,
+      row: { ...this.initialState.row, id: store.length + 1 }
     })
 
     this.firstEditable.current.focus()
@@ -42,7 +37,6 @@ export default class EditTable extends Component {
 
   deleteRow = id => {
     const { store } = this.state
-
     this.setState({ store: store.filter(item => id !== item.id) })
   }
 
@@ -78,7 +72,6 @@ export default class EditTable extends Component {
   }
 
   handleContentEditable = event => {
-    console.log("BBB")
     const { row } = this.state
     const {
       currentTarget: { dataset: { column }, },
@@ -89,7 +82,6 @@ export default class EditTable extends Component {
   }
 
   handleContentEditableUpdate = event => {
-    console.log("AAA")
     const { store } = this.state
 
     const {
@@ -106,17 +98,12 @@ export default class EditTable extends Component {
   }
 
   render() {
-    console.log('RENDER')
     const {
       store,
       row: { name, price },
     } = this.state
 
     const s = store.sort((itemA, itemB) => itemA.name < itemB.name ? -1 : 1);
-    console.log(`sorted:`)
-    store.forEach(r => {
-      console.log(`r: ${r.name}`)
-    })
 
     return (
       <div className="App">
@@ -148,7 +135,7 @@ export default class EditTable extends Component {
               />
             </Table.Cell>
             <Table.Cell className="narrow">
-              <Button onClick={() => { this.deleteRow(row.id) }} > Delete </Button>
+              <Button style={{visibility: row.always ? "hidden": "visible"}} onClick={() => { this.deleteRow(row.id) }} >Delete</Button>
             </Table.Cell>
             </Table.Row>
           )
@@ -167,7 +154,7 @@ export default class EditTable extends Component {
               />
             </Table.Cell>
             <Table.Cell className="narrow">
-              <Button disabled={!name || !price} onClick={this.addRow}>Add</Button>
+              <Button onClick={this.addRow}>Add</Button>
             </Table.Cell>
           </Table.Row>
         </Table.Body>
@@ -177,3 +164,4 @@ export default class EditTable extends Component {
   }
 }
 
+// disabled={!name || !price}
