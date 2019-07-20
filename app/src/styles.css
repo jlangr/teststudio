@@ -1,0 +1,113 @@
+html,
+body {
+  height: auto;
+}
+
+.App {
+  margin: 2rem auto;
+  max-width: 800px;
+  font-family: sans-serif;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.btn-song {
+  margin: 3px;
+}
+
+.editing {
+}
+
+.hidden {
+  display: none;
+}
+
+Label {
+  margin-right: 10px;
+}
+
+.select {
+  display: 'inline-block';
+}
+
+.tracks-grid {
+  margin: 0;
+}
+
+.tracks-row {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.knob {
+  display: 'inline-block';
+  width: 36px; /* the canvas's width and height will be based only on the width of the element */
+  height: 36px;
+  font-size: 1.2vw; /* of text output */
+  line-height: 55%; /* width of the knob's "lane" */
+  border-bottom-color: #ccc; /* background color of "lane" */
+  border-top-color: 'blue'; /* color of knob's value indicator */
+}
+
+.track-select-padding {
+  padding-top: 15px;
+  padding-left: 0;
+}
+
+.tracks {
+  margin: 20px 0;
+}
+
+.bump-left {
+  margin-left: 5px;
+}
+
+.ui.table td {
+  padding: 1rem;
+}
+
+.ui.table td.narrow {
+  padding: 0;
+}
+
+.ui.button {
+  margin: 0 0.5rem;
+}
+
+.content-editable {
+  padding: 1rem;
+}
+
+.content-editable:hover {
+  background: #f7f7f7;
+}
+
+.content-editable:focus {
+  background: #fcf8e1;
+  outline: 0;
+}
+
+

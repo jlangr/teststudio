@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import './App.css'
+import './styles.css'
 
-export default class App extends Component {
+export default class Misc extends Component {
   constructor() {
     super()
     this.state = { 
@@ -65,7 +65,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className='App'>
         <div>
           <hr />
              <h3>Email Validator</h3>
