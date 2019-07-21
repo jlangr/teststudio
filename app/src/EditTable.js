@@ -2,34 +2,27 @@ import React, { Component } from 'react'
 import ContentEditable from 'react-contenteditable'
 import { Table, Button } from 'semantic-ui-react'
 import './styles.css'
-import { alwaysItems } from './always-items'
+import { alwaysItems, newAlwaysItems } from './always-items'
+
+let items = alwaysItems
+items = newAlwaysItems
 
 export default class EditTable extends Component {
-  initialState = {
-    store: alwaysItems,
-    row: {
-      name: '',
-      price: '',
-    }
-  }
-
-  state = this.initialState
+  state = { store: items, name: '', price: '' }
   firstEditable = React.createRef()
 
+  trimSpaces(s) {
+    return s.replace(/&nbsp;/g, '').replace(/&amp;/g, '&').replace(/&gt;/g, '>').replace(/&lt;/g, '<')
+  }
+
   addRow = () => {
-    const { store, row } = this.state
-    const trimSpaces = string => {
-      return string
-        .replace(/&nbsp;/g, '')
-        .replace(/&amp;/g, '&')
-        .replace(/&gt;/g, '>')
-        .replace(/&lt;/g, '<')
-    }
-    const trimmedRow = { ...row, name: trimSpaces(row.name) }
+    const { store, name, price } = this.state
+    const newRow = { name: this.trimSpaces(name), price, id: store.length + 1 }
 
     this.setState({
-      store: [...store, trimmedRow],
-      row: { ...this.initialState.row, id: store.length + 1 }
+      store: [...store, newRow],
+      name: '',
+      price: ''
     })
 
     this.firstEditable.current.focus()
@@ -71,15 +64,12 @@ export default class EditTable extends Component {
     }, 0)
   }
 
-  handleContentEditable = event => {
-    const { row } = this.state
-    const {
-      currentTarget: { dataset: { column }, },
-      target: { value },
-    } = event
-
-    this.setState({ row: { ...row, [column]: value } })
-  }
+  updateState = event => {
+    const key = event.target.id
+    let value = event.target.value
+    value = (key === 'name' && value) ? value.toLowerCase() : value
+    this.setState({ [key]: value })
+  } 
 
   handleContentEditableUpdate = event => {
     const { store } = this.state
@@ -98,11 +88,7 @@ export default class EditTable extends Component {
   }
 
   render() {
-    const {
-      store,
-      row: { name, price },
-    } = this.state
-
+    const { store } = this.state 
     const s = store.sort((itemA, itemB) => itemA.name < itemB.name ? -1 : 1);
 
     return (
@@ -112,7 +98,8 @@ export default class EditTable extends Component {
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell>Price</Table.HeaderCell>
+            <Table.HeaderCell>Retail Price</Table.HeaderCell>
+            <Table.HeaderCell>w/ Markup</Table.HeaderCell>
             <Table.HeaderCell>Action</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
@@ -120,7 +107,7 @@ export default class EditTable extends Component {
           {
             s.map((row, i) => {
             return (
-              <Table.Row key={row.id}>
+              <Table.Row id={row.id} key={row.id}>
               <Table.Cell className="narrow">
               <ContentEditable
                 html={row.name}
@@ -134,34 +121,29 @@ export default class EditTable extends Component {
                 onKeyPress={this.validateNumber} onPaste={this.pasteAsPlainText} onFocus={this.highlightAll} onChange={this.handleContentEditableUpdate}
               />
             </Table.Cell>
+            <Table.Cell>
+              <span id={'calculatedAmount-'+row.id}>{(row.price * 2.5).toFixed(2)}</span>
+            </Table.Cell>
             <Table.Cell className="narrow">
               <Button style={{visibility: row.always ? "hidden": "visible"}} onClick={() => { this.deleteRow(row.id) }} >Delete</Button>
             </Table.Cell>
             </Table.Row>
           )
           })}
-          <Table.Row>
-            <Table.Cell className="narrow">
-              <ContentEditable html={name}
-                data-column="name" className="content-editable" innerRef={this.firstEditable}
-                onKeyPress={this.disableNewlines} onPaste={this.pasteAsPlainText} onFocus={this.highlightAll} onChange={this.handleContentEditable}
-              />
-            </Table.Cell>
-            <Table.Cell className="narrow">
-              <ContentEditable html={price}
-                data-column="price" className="content-editable"
-                onKeyPress={this.validateNumber} onPaste={this.pasteAsPlainText} onFocus={this.highlightAll} onChange={this.handleContentEditable}
-              />
-            </Table.Cell>
-            <Table.Cell className="narrow">
-              <Button onClick={this.addRow}>Add</Button>
-            </Table.Cell>
-          </Table.Row>
         </Table.Body>
       </Table>
+
+      <div>
+        <label>Name</label>
+        <input type="text" id="name" className="content-editable"
+          onKeyPress={this.disableNewlines} onFocus={this.highlightAll} onChange={this.updateState} />
+
+        <label>Price</label>
+        <input type="text" id="price" className="content-editable"
+          onKeyPress={this.validateNumber} onFocus={this.highlightAll} onChange={this.updateState} />
+        <Button onClick={this.addRow}>Add</Button>
+      </div>
     </div>
   )
   }
 }
-
-// disabled={!name || !price}
