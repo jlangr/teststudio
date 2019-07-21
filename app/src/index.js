@@ -37,8 +37,9 @@ if (typeof Object.assign !== 'function') {
 
 const Root = () => (
   <div>
-    <Main/>
+    <Main />
   </div>)
 
-ReactDOM.render(Root(), document.getElementById('root'))
+const root = document.getElementById('root')
+ReactDOM.render(Root(), root)
 registerServiceWorker()
