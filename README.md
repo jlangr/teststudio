@@ -20,12 +20,15 @@ From VS, select the Local Git Repositories in the Team Explorer.
 Open a command prompt from here (by right-clicking on the git repo).
 
 - in this first command prompt, to start the client:
-cd app
+
+```cd app
 npm start
+```
 
 - Open a second command prompt, then:
-cd server
+```cd server
 node index.js
+```
 
 ## Using the App
 
