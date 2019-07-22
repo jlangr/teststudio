@@ -11,9 +11,21 @@ git clone http://github.com/jlangr/teststudio
 
 - Navigate to the `teststudio` directory.
 - in `./server`, run `npm install` before the first time you start the server
-- in `./server`, run `node index.js` to start the server
-- in `./app`, run `npm install` before the first time you start the app
-- in `./app`, run `npm start` to start the client
+- run `npm install` before the first time you start the app
+
+## Starting the Server and App
+ (TUES / WED if you reboot)
+ 
+From VS, select the Local Git Repositories in the Team Explorer.
+Open a command prompt from here (by right-clicking on the git repo).
+
+- in this first command prompt, to start the client:
+cd app
+npm start
+
+- Open a second command prompt, then:
+cd server
+node index.js
 
 ## Using the App
 
