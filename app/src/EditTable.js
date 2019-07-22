@@ -112,13 +112,13 @@ export default class EditTable extends Component {
               <ContentEditable
                 html={row.name}
                 data-column="name" data-row={i} className="content-editable"
-                onKeyPress={this.disableNewlines} onPaste={this.pasteAsPlainText} onFocus={this.highlightAll} onChange={this.handleContentEditableUpdate}
+                onKeyPress={this.disableNewlines} onPaste={this.pasteAsPlainText} onChange={this.handleContentEditableUpdate}
               />
             </Table.Cell>
             <Table.Cell className="narrow">
               <ContentEditable html={row.price.toString()}
                 data-column="price" data-row={i} className="content-editable"
-                onKeyPress={this.validateNumber} onPaste={this.pasteAsPlainText} onFocus={this.highlightAll} onChange={this.handleContentEditableUpdate}
+                onKeyPress={this.validateNumber} onPaste={this.pasteAsPlainText} onChange={this.handleContentEditableUpdate}
               />
             </Table.Cell>
             <Table.Cell>
@@ -136,11 +136,11 @@ export default class EditTable extends Component {
       <div>
         <label>Name</label>
         <input type="text" id="name" className="content-editable"
-          onKeyPress={this.disableNewlines} onFocus={this.highlightAll} onChange={this.updateState} />
+          onKeyPress={this.disableNewlines} onChange={this.updateState} />
 
         <label>Price</label>
         <input type="text" id="price" className="content-editable"
-          onKeyPress={this.validateNumber} onFocus={this.highlightAll} onChange={this.updateState} />
+          onKeyPress={this.validateNumber} onChange={this.updateState} />
         <Button onClick={this.addRow}>Add</Button>
       </div>
     </div>
