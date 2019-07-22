@@ -1,6 +1,4 @@
-This source base is used for my tutorial workshops on mobbing. 
-
-Upcoming: [Agile + DevOps EAST 2018 (Orlando)](https://agiledevopseast.techwell.com).
+This source base is used for Test Studio exercises.
 
 ## Getting Started
 
@@ -8,24 +6,32 @@ Upcoming: [Agile + DevOps EAST 2018 (Orlando)](https://agiledevopseast.techwell.
 
 - Download this repository:
 ```
-git clone http://github.com/jlangr/geektone
+git clone http://github.com/jlangr/teststudio
 ```
-- Navigate to the `geektone` directory.
-- in `./server`, run `node index.js`
-- in `./app`, run `npm install` before the first time you start the app
-- in `./app`, run `npm start`
 
-## Geektone Basics
+- Navigate to the `teststudio` directory.
+- in `./server`, run `npm install` before the first time you start the server
+- run `npm install` before the first time you start the app
 
-Geektone supports the keyboard for many actions.
+## Starting the Server and App
+ (TUES / WED if you reboot)
+ 
+From VS, select the Local Git Repositories in the Team Explorer.
+Open a command prompt from here (by right-clicking on the git repo).
 
-## Deficiencies
+- in this first command prompt, to start the client:
 
-Notes longer than one measure not yet supported.
-Sharps / flats in key signature are not ordered appropriately.
-No bass clef
-Doubling / halving of dotted notes not supported (no arbitrary ties)
+```
+cd app
+npm start
+```
 
-## Samples
+- Open a second command prompt, then:
+```
+cd server
+node index.js
+```
 
-Loaded from github/nbrosowski/tonejs-instruments
+## Using the App
+
+The app by default loads at localhost:3000.
