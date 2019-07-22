@@ -10,9 +10,10 @@ git clone http://github.com/jlangr/teststudio
 ```
 
 - Navigate to the `teststudio` directory.
-- in `./server`, run `node index.js`
+- in `./server`, run `npm install` before the first time you start the server
+- in `./server`, run `node index.js` to start the server
 - in `./app`, run `npm install` before the first time you start the app
-- in `./app`, run `npm start`
+- in `./app`, run `npm start` to start the client
 
 ## Using the App
 
