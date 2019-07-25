@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 import Modal from './Modal'
 import './styles.css'
 
@@ -8,7 +7,6 @@ export default class Misc extends Component {
     super()
     this.state = { 
       message: '', 
-      selectedFile: null, 
       dueDate: '',
       findme1: '',
       isOpen: false
@@ -16,54 +14,18 @@ export default class Misc extends Component {
     this.findme1Click.bind(this)
   }
 
-  submit() {
-    console.log('submitting request')
-    //this.setState({ message: '' })
-    let data
-    if (typeof FormData == "undefined") {
-      data = []
-      data.push('fileToUpload', this.state.selectedFile)
-    }
-    else{
-      data = new FormData()
-      data.append('fileToUpload', this.state.selectedFile)
-    }
-    axios.post("http://localhost:3001/upload", data, {})
-      .then(response => { 
-        console.log('success')
-        this.setState({ message: 'file uploaded' })
-      })
-      .catch(response => {
-        console.log('fail', response)
-        this.setState({ message: 'File too large' })
-      })
-  }
-
   toggleModal = () => {
-    console.log("toggle modal")
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-    console.log(this.state.isOpen)
-  }
-
-  changeFile(event) {
-    this.setState({ selectedFile: event.target.files[0], loaded: 0 })
+    this.setState({ isOpen: !this.state.isOpen })
   }
 
   showConfirm() {
-console.log('SHOWCONFIRM')
     let msg = document.getElementById('messageResult')
-console.log("messageResult:", msg)
     if (!msg)
       return
 
     msg.innerText = ""
 
-    let Args = new Object()
-    Args.opener = window
-    Args.message = "Do you want to continue?"
-    
+    const Args = { opener: window, message: 'Continue?'}
     const blnCnfrmDelete = window.showModalDialog("ConfirmYesNo.htm", Args, "resizable:no; dialogHeight:170px; dialogWidth:300px; status:no")
         
     if (blnCnfrmDelete)
@@ -71,7 +33,6 @@ console.log("messageResult:", msg)
     else
       msg.innerText = "false"
   }
-
 
   validate(event) {
     const email = event.target.value
@@ -127,14 +88,6 @@ console.log("messageResult:", msg)
              <p>Your email: <input type='text' id='email' onKeyUp={this.validate.bind(this)} /></p>
 
           <hr />
-             <h3>File Uploader</h3>
-              <p>Upload a file to the server:</p>
-              <input type='file' name='fileToUpload' onChange={this.changeFile.bind(this)} />
-              <button onClick={this.submit.bind(this)}>Upload!</button>
-              <p></p>
-              <p><label id='errorMessage'>{this.state.message}</label></p>
-
-          <hr />
               <h3>Library System</h3>
               <p>today is {this.formatDate()}</p>
               <p>your book is due: </p>
@@ -160,12 +113,8 @@ console.log("messageResult:", msg)
           <hr />
         </div>
 
-        <div id="">
-        <h3></h3>
-        </div>
-
         <hr />
-        <h3>File Uploader</h3>
+        <h3>Confirm Popup</h3>
 
         <div style={{ margin: 'auto', textAlign: 'left' }}>
            <input type='button' id='btnConfirm' style={{ width: '120px' }} name='btnConfirm' value='Show Confirm' onClick={this.showConfirm} tabIndex='1' />
@@ -173,6 +122,7 @@ console.log("messageResult:", msg)
         <div id='messageResult'>
         </div>
 
+        <hr />
 
         <h3>Disclaimers</h3>
         <p>Ipsum dorum ...</p>
