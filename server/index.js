@@ -15,6 +15,7 @@ allowCORS(app)
 app.use(fileUpload())
 
 app.post('/upload', (request, response) => {
+  console.log(request)
   const file = request.files.fileToUpload
   if (file.size >= 32768) {
     console.log('file too large; returning 400')

@@ -5,7 +5,7 @@ import './styles.css'
 import { alwaysItems, newAlwaysItems } from './always-items'
 
 let items = alwaysItems
-//items = newAlwaysItems
+items = newAlwaysItems
 
 export default class EditTable extends Component {
   state = { store: items, name: '', price: '' }

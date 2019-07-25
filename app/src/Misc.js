@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import Modal from './Modal'
 import './styles.css'
 
 export default class Misc extends Component {
@@ -10,6 +11,7 @@ export default class Misc extends Component {
       selectedFile: null, 
       dueDate: '',
       findme1: '',
+      isOpen: false
     }
     this.findme1Click.bind(this)
   }
@@ -17,16 +19,59 @@ export default class Misc extends Component {
   submit() {
     console.log('submitting request')
     //this.setState({ message: '' })
-    const data = new FormData()
-    data.append('fileToUpload', this.state.selectedFile)
+    let data
+    if (typeof FormData == "undefined") {
+      data = []
+      data.push('fileToUpload', this.state.selectedFile)
+    }
+    else{
+      data = new FormData()
+      data.append('fileToUpload', this.state.selectedFile)
+    }
     axios.post("http://localhost:3001/upload", data, {})
-      .then(response => this.setState({ message: 'file uploaded' }))
-      .catch(response => this.setState({ message: 'File too large' }))
+      .then(response => { 
+        console.log('success')
+        this.setState({ message: 'file uploaded' })
+      })
+      .catch(response => {
+        console.log('fail', response)
+        this.setState({ message: 'File too large' })
+      })
+  }
+
+  toggleModal = () => {
+    console.log("toggle modal")
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
+    console.log(this.state.isOpen)
   }
 
   changeFile(event) {
     this.setState({ selectedFile: event.target.files[0], loaded: 0 })
   }
+
+  showConfirm() {
+console.log('SHOWCONFIRM')
+    let msg = document.getElementById('messageResult')
+console.log("messageResult:", msg)
+    if (!msg)
+      return
+
+    msg.innerText = ""
+
+    let Args = new Object()
+    Args.opener = window
+    Args.message = "Do you want to continue?"
+    
+    const blnCnfrmDelete = window.showModalDialog("ConfirmYesNo.htm", Args, "resizable:no; dialogHeight:170px; dialogWidth:300px; status:no")
+        
+    if (blnCnfrmDelete)
+      msg.innerText = "true"
+    else
+      msg.innerText = "false"
+  }
+
 
   validate(event) {
     const email = event.target.value
@@ -67,6 +112,16 @@ export default class Misc extends Component {
     return (
       <div className='App'>
         <div>
+          <div>
+            <button onClick={this.toggleModal}>
+              Open the modal
+             </button>
+
+            <Modal show={this.state.isOpen}
+              onClose={this.toggleModal}>
+              Here's some content for the modal
+            </Modal>        
+          </div>
           <hr />
              <h3>Email Validator</h3>
              <p>Your email: <input type='text' id='email' onKeyUp={this.validate.bind(this)} /></p>
@@ -108,6 +163,16 @@ export default class Misc extends Component {
         <div id="">
         <h3></h3>
         </div>
+
+        <hr />
+        <h3>File Uploader</h3>
+
+        <div style={{ margin: 'auto', textAlign: 'left' }}>
+           <input type='button' id='btnConfirm' style={{ width: '120px' }} name='btnConfirm' value='Show Confirm' onClick={this.showConfirm} tabIndex='1' />
+        </div>
+        <div id='messageResult'>
+        </div>
+
 
         <h3>Disclaimers</h3>
         <p>Ipsum dorum ...</p>
